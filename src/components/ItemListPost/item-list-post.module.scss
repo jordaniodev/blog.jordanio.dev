@@ -1,0 +1,32 @@
+.itemListPost{
+  display: flex;
+  flex-direction: column;
+  h2{
+    font-size: 1.75rem;
+    font-weight: bold;
+    color: var(--background-1);
+    letter-spacing: -0.5px;
+    margin-bottom: .5rem;
+    cursor: pointer;
+
+    &:hover{
+      color: var(--red);
+    }
+  }
+  p{
+    color: var(--gray-2);
+    margin-bottom: 1.5rem;
+  }
+  footer{
+    display: flex;
+    gap: 1.5rem;
+
+    span{
+      font-size: 0.875rem;
+      color: var(--gray-2);
+      display: flex;
+      gap: .5rem;
+      align-items: center;
+    }
+  }
+}

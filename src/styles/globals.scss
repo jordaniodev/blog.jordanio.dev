@@ -1,0 +1,32 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+:root {
+  // RED
+  --red_dark-3: #180000;
+  --red_dark-2: #a60321;
+  --red_dark-1: #590209;
+  --red: #d9043d;
+  --red_light-1: #f2055c;
+
+  // GREEN
+  --green_dark: #00a60d;
+  --green_light: #05f217;
+
+  // BASE
+  --background-1: #f1f1f1;
+  --background-2: #f6f6f6;
+  --gray-1: #00a60d;
+  --gray-2: #a8a6ac;
+  --gray-3: #625f68;
+  --gray-4: #2a282f;
+}
+
+// TODO
+body{
+  background-color: var(--red_dark-3);
+  font-family: 'MontSerrat',sans-serif;
+}
+

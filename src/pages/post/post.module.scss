@@ -1,0 +1,53 @@
+.bannerImage {
+  width: 100%;
+  height: 400px;
+  position: absolute;
+  left: 0;
+  object-fit: cover;
+  object-position: center;
+  transition: 1.5s linear;
+}
+.container {
+  width: min(700px, calc(100% - 48px));
+  margin-inline: auto;
+
+
+  h1 {
+    margin-top: 440px;
+    color: var(--background-1);
+    margin-bottom: 1.5rem;
+    font-size: 3rem;
+  }
+}
+
+.postInformation {
+  display: flex;
+  gap: 1rem;
+
+  span {
+    color: var(--gray-2);
+    align-items: center;
+
+    font-size: 0.875rem;
+    display: flex;
+    gap: 0.5rem;
+  }
+  margin-bottom: 4rem;
+}
+
+.content {
+  h2 {
+    font-size: 2rem;
+    color: var(--background-1);
+    margin: 4rem 0 1rem 0;
+  }
+
+  p {
+    font-size: 1rem;
+    color: var(--gray-2);
+
+    & + p{
+      margin-top: 1rem;
+    }
+  }
+}
