@@ -1,20 +1,23 @@
-import * as prismic from '@prismicio/client';
-import * as prismicNext from '@prismicio/next';
+import {
+  Client,
+  createClient as PrismicClient,
+  getRepositoryName
+} from '@prismicio/client';
+import { CreateClientConfig, enableAutoPreviews } from '@prismicio/next';
 
 import sm from '../../sm.json';
 
 /**
  * The project's Prismic repository name.
  */
-export const repositoryName = prismic.getRepositoryName(sm.apiEndpoint);
+export const repositoryName = getRepositoryName(sm.apiEndpoint);
 
 /**
  * The project's Prismic Link Resolver. This function determines the URL for a given Prismic document.
  *
  * @type {prismicH.LinkResolverFunction}
  */
-export const linkResolver = (doc: { type: string; uid: any }) => {
-
+export const linkResolver = (doc: { type: string; uid: unknown }): any => {
   if (doc.type === 'post') {
     return `/post/${doc.uid}`;
   }
@@ -28,14 +31,12 @@ export const linkResolver = (doc: { type: string; uid: any }) => {
  *
  * @param config {prismicNext.CreateClientConfig} - Configuration for the Prismic client.
  */
-export const createClient = (
-  config: prismicNext.CreateClientConfig = {}
-): prismic.Client => {
-  const client = prismic.createClient(sm.apiEndpoint, {
+export const createClient = (config: CreateClientConfig = {}): Client => {
+  const client = PrismicClient(sm.apiEndpoint, {
     ...config,
   });
 
-  prismicNext.enableAutoPreviews({
+  enableAutoPreviews({
     client,
     previewData: config.previewData,
     req: config.req,

@@ -28,7 +28,6 @@ interface HomeProps {
 }
 
 export default function Home({ postsPagination }: HomeProps): ReactElement {
-  console.log(postsPagination);
   return (
     <>
       <div className={style.container}>

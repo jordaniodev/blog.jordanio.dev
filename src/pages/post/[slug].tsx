@@ -1,8 +1,11 @@
-import { PrismicRichText } from '@prismicio/react';
+import { format } from 'date-fns';
+import { ptBR } from 'date-fns/locale';
 import { GetStaticPaths, GetStaticProps } from 'next';
+import { useRouter } from 'next/router';
+import { RichText } from 'prismic-dom';
 import { ReactElement } from 'react';
 import { AiOutlineCalendar } from 'react-icons/ai';
-import { BiUser } from 'react-icons/bi';
+import { BiTime, BiUser } from 'react-icons/bi';
 import Header from '../../components/Header';
 import { createClient } from '../../services/prismic';
 import style from './post.module.scss';
@@ -11,7 +14,10 @@ interface Post {
   slug: string;
   title: string;
   content: any;
-  banner: string;
+  timeToRead: string;
+  banner: {
+    url: string;
+  };
   author: string;
   updatedAt: string;
 }
@@ -21,6 +27,11 @@ interface PostProps {
 }
 
 export default function Post({ post }: PostProps): ReactElement {
+  const { isFallback } = useRouter();
+
+  if (isFallback) {
+    return <p>Carregando...</p>;
+  }
   return (
     <div className={style.container}>
       <Header />
@@ -39,16 +50,15 @@ export default function Post({ post }: PostProps): ReactElement {
           <BiUser />
           {post.author}
         </span>
+        <span>
+          <BiTime />
+          {post.timeToRead}
+        </span>
       </div>
-      <div className={style.content}>
-        <PrismicRichText
-          field={post.content}
-          components={{
-            heading2: ({ children }) => <h2>{children}</h2>,
-            paragraph: ({ children }) => <p>{children}</p>,
-          }}
-        />
-      </div>
+      <div
+        className={style.content}
+        dangerouslySetInnerHTML={{ __html: post.content }}
+      />
     </div>
   );
 }
@@ -79,21 +89,23 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   const prismic = createClient();
 
   const response = await prismic.getByUID('post', String(slug), {});
+  const timeToRead = Math.ceil(
+    RichText.asText(response.data.content)
+      .replace('.', '')
+      .replace(',', '')
+      .split(' ').length / 200
+  );
 
   const post = {
     slug,
     title: response.data.title,
-    content: response.data.content,
+    content: RichText.asHtml(response.data.content),
     banner: response.data.banner,
     author: response.data.author,
-    updatedAt: new Date(response.last_publication_date).toLocaleDateString(
-      'pt-BR',
-      {
-        day: '2-digit',
-        month: 'long',
-        year: 'numeric',
-      }
-    ),
+    timeToRead: `${timeToRead} min`,
+    updatedAt: format(new Date(response.last_publication_date), 'd MMM yyyy', {
+      locale: ptBR,
+    }),
   };
 
   return {
