@@ -17,7 +17,7 @@ export default function ItemListPost({
     setPublicationDate(
       new Date(post.first_publication_date).toLocaleDateString()
     );
-  }, []);
+  }, [post.first_publication_date]);
 
   return (
     <li className={styles.itemListPost}>

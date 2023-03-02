@@ -1,7 +1,7 @@
 import {
   Client,
   createClient as PrismicClient,
-  getRepositoryName
+  getRepositoryName,
 } from '@prismicio/client';
 import { CreateClientConfig, enableAutoPreviews } from '@prismicio/next';
 

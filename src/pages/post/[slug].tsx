@@ -13,7 +13,7 @@ import style from './post.module.scss';
 interface Post {
   slug: string;
   title: string;
-  content: any;
+  content: string;
   timeToRead: string;
   banner: {
     url: string;
@@ -57,6 +57,7 @@ export default function Post({ post }: PostProps): ReactElement {
       </div>
       <div
         className={style.content}
+        // eslint-disable-next-line react/no-danger
         dangerouslySetInnerHTML={{ __html: post.content }}
       />
     </div>
